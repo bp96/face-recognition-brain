@@ -5,16 +5,19 @@ class Signin extends React.Component {
     super(props);
     this.state = {
       signInEmail: '',
-      signInPassword: ''
+      signInPassword: '',
+      showError: false
     }
   }
 
   onEmailChange = (event) => {
-    this.setState({signInEmail: event.target.value})
+    this.setState({signInEmail: event.target.value,
+                          showError: false})
   }
 
   onPasswordChange = (event) => {
-    this.setState({signInPassword: event.target.value})
+    this.setState({signInPassword: event.target.value,
+                          showError: false})
   }
 
   onSubmitSignIn = () => {
@@ -26,7 +29,12 @@ class Signin extends React.Component {
         password: this.state.signInPassword
       })
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {return response.json()} 
+        else {
+          this.setState({showError: true})
+          throw new Error('Sign in failed');}
+      })
       .then(user => {
         if (user.id) {
           this.props.loadUser(user)
@@ -34,6 +42,12 @@ class Signin extends React.Component {
         }
       })
   }
+
+  handleEnterKeyDown(event) {
+    if(event.keyCode === 13) { 
+      document.getElementById("submitBtn").click() // this needs to be updated to become more React-like
+  }
+}
 
   signInAsGuest = () => {
           this.props.onRouteChange('home');
@@ -55,6 +69,7 @@ class Signin extends React.Component {
                   name="email-address"
                   id="email-address"
                   onChange={this.onEmailChange}
+                  onKeyDown={this.handleEnterKeyDown} // press enter to submit - WIP
                 />
               </div>
               <div className="mv3">
@@ -65,11 +80,13 @@ class Signin extends React.Component {
                   name="password"
                   id="password"
                   onChange={this.onPasswordChange}
+                  onKeyDown={this.handleEnterKeyDown}
                 />
               </div>
             </fieldset>
             <div className="">
               <input
+                id="submitBtn"
                 onClick={this.onSubmitSignIn}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
@@ -85,6 +102,11 @@ class Signin extends React.Component {
                 value="Continue as guest"
               />
             </div>
+            <div className="lh-copy mt3">
+              {this.state.showError?
+                <h3 className="b ph3 pv2 input-reset ba b--black bg-light-yellow f6 dib"> Invalid Email/Password. </h3>:""
+              }
+              </div> 
           </div>
         </main>
       </article>

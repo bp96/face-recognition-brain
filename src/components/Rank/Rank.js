@@ -2,9 +2,6 @@ import React from 'react';
 
 const Rank = ({ name, entries }) => {
   return (
-    name ='Guest'?
-    <div></div>
-    :
     <div>
       <div className='white f3'>
         {`${name}, your current entry count is...`}

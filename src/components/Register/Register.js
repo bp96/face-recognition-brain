@@ -6,20 +6,26 @@ class Register extends React.Component {
     this.state = {
       email: '',
       password: '',
-      name: ''
+      name: '',
+      showError: false
     }
   }
 
   onNameChange = (event) => {
-    this.setState({name: event.target.value})
+    this.setState({name: event.target.value,
+                          showError: false})
   }
 
   onEmailChange = (event) => {
-    this.setState({email: event.target.value})
+    this.setState({email: event.target.value,
+                   showError: false
+                  })
   }
 
   onPasswordChange = (event) => {
-    this.setState({password: event.target.value})
+    this.setState({password: event.target.value,
+                   showError: false
+    })
   }
 
   onSubmitSignIn = () => {
@@ -32,13 +38,19 @@ class Register extends React.Component {
         name: this.state.name
       })
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {return response.json()} 
+        else {
+          this.setState({showError: true})
+          throw new Error('Register failed');}
+      })
       .then(user => {
         if (user) {
           this.props.loadUser(user)
           this.props.onRouteChange('home');
         }
       })
+      .catch( e => {throw new Error(e);})
   }
 
   signInAsGuest = () => {
@@ -99,6 +111,12 @@ class Register extends React.Component {
                 value="Continue as guest"
               />
             </div>
+            
+              <div className="lh-copy mt3">
+              {this.state.showError?
+                <h3 className="b ph3 pv2 input-reset ba b--black bg-light-yellow f6 dib"> This email is already registered. Please use another email. </h3>:""
+              }
+              </div>           
           </div>
         </main>
       </article>
