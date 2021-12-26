@@ -3,5 +3,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/brijpets/public_html/face-recognition-website
-    - /bin/cp -u -r * $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
