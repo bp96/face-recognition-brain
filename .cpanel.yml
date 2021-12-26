@@ -1,7 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/brijpets/public_html/face-recognition-website
+    - export DEPLOYPATH=/home/brijpets/public_html/face-recognition-website/
     - /bin/cp -r /home/brijpets/repositories/face-recognition-website/face-recognition-brain/build/* $DEPLOYPATH
-
-    # copies files over to public_html folder from repo
