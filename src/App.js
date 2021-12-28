@@ -90,7 +90,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    fetch('https://glacial-dawn-54509.herokuapp.com/imageurl', { // URL: http://localhost:3001/imageurl
+    fetch('https://facerecognitionwebsite.herokuapp.com/imageurl', { // URL: http://localhost:3001/imageurl
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -100,7 +100,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('https://glacial-dawn-54509.herokuapp.com:3001/image', { // URL: http://localhost:3001/image
+          fetch('https://facerecognitionwebsite.herokuapp.com:3001/image', { // URL: http://localhost:3001/image
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
