@@ -109,7 +109,7 @@ class App extends Component {
           })
             .then(response => response.json())
             .then(count => {
-              if (this.state.user.name='Guest'){
+              if (this.state.user.name=='Guest'){
                 this.setState({user: {name: 'Guest',
                               entries: this.state.user.entries + 1} 
                               })
